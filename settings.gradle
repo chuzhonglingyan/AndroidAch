@@ -1,1 +1,1 @@
-include ':app', ':baselibs', ':generatecode'
+include ':app', ':baselibs', ':generatecode', ':basecomponent'

@@ -8,21 +8,11 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId "com.yuntian.androidnewarchitecture"
+        applicationId "com.yuntian.androidarch"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        dexOptions{
-             //是否支持大工程模式
-            jumboMode = true
-            //线程数
-            threadCount = 8
-        }
-
-//        multiDexEnabled true
     }
 
     buildTypes {
