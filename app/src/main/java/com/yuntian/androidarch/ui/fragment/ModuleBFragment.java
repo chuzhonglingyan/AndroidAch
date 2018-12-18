@@ -1,19 +1,20 @@
-package com.yuntian.androidarch.ui.activity;
+package com.yuntian.androidarch.ui.fragment;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.yuntian.androidarch.R;
-import com.yuntian.baselibs.base.BaseActivity;
+import com.yuntian.baselibs.base.BaseFragment;
 import com.yuntian.baselibs.di.component.AppComponent;
 
 import androidx.annotation.Nullable;
 
-public class ModuleActivity extends BaseActivity {
+public class ModuleBFragment extends BaseFragment {
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_module;
+        return R.layout.fragment_module;
     }
 
     @Override
@@ -23,7 +24,8 @@ public class ModuleActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        TextView tvShow= findViewById(R.id.tv_show);
+        tvShow.setText("ModuleBFragment");
     }
 
     @Override

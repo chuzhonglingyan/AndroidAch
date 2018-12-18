@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.yuntian.androidarch.ui.activity.ModuleTabActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -39,7 +39,7 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseViewHold
             return;
         }
         this.data.add(item);
-        notifyItemInserted(this.data.size());
+        notifyItemInserted(this.data.size()-1);
     }
 
 

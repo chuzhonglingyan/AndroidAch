@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.yuntian.baselibs.di.component.AppComponent;
+import com.yuntian.baselibs.util.FragmentHelp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import androidx.lifecycle.LifecycleOwner;
 public abstract class BaseActivity extends AppCompatActivity implements LifecycleOwner, IView {
 
     protected Context context;
+    protected FragmentHelp fragmentHelp;
 
 
     protected AppComponent getApplicationComponent(AppCompatActivity context) {
@@ -22,11 +24,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        this.context = this;
+        init();
         inject(getApplicationComponent(this));
         initView();
         initListener();
         initData(savedInstanceState==null,savedInstanceState);
+    }
+
+    private void  init(){
+        this.context = this;
+        fragmentHelp=FragmentHelp.newIntance(this);
     }
 
 
@@ -43,6 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     protected abstract void initData(boolean isInit,@Nullable Bundle savedInstanceState);
 
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragmentHelp.clean();
+    }
 }

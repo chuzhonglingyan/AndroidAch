@@ -1,6 +1,7 @@
 package com.yuntian.androidarch.ui.fragment;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.yuntian.androidarch.R;
 import com.yuntian.baselibs.base.BaseFragment;
@@ -8,7 +9,7 @@ import com.yuntian.baselibs.di.component.AppComponent;
 
 import androidx.annotation.Nullable;
 
-public class ModuleFragment extends BaseFragment {
+public class ModuleAFragment extends BaseFragment {
 
 
     @Override
@@ -24,6 +25,8 @@ public class ModuleFragment extends BaseFragment {
     @Override
     protected void initView() {
 
+       TextView  tvShow= findViewById(R.id.tv_show);
+       tvShow.setText("ModuleAFragment");
     }
 
     @Override
