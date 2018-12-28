@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 /**
  * @author chulingyan
  * @time 2018/12/18 21:41
- * @describe
+ * @describe 事务执行需要时间
  */
 public class FragmentHelp {
 
@@ -79,6 +79,10 @@ public class FragmentHelp {
 
 
     public void show(Fragment fragment) {
+        if (fragment == null) {
+            LogUtils.d("frgament不存在");
+            return;
+        }
         if (!fragment.isAdded()) {
             LogUtils.d("该" + fragment.toString() + "还未被添加");
             return;
@@ -93,21 +97,34 @@ public class FragmentHelp {
     }
 
     public void showAndHide(Fragment fragment) {
+        if (fragment == null) {
+            LogUtils.d("frgament不存在");
+            return;
+        }
         if (!fragment.isAdded()) {
             LogUtils.d("该" + fragment.toString() + "还未被添加");
             return;
         }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         for (Fragment fragmentTemp : fragmentStack) {
+            if (fragmentTemp==fragment){
+                continue;
+            }
             transaction.hide(fragmentTemp);
         }
-        transaction.show(fragment);
+        if (fragment.isHidden()){
+            transaction.show(fragment);
+        }
         transaction.commit();
         LogUtils.d("showAndHide执行完毕");
     }
 
 
     public void hide(Fragment fragment) {
+        if (fragment == null) {
+            LogUtils.d("frgament不存在");
+            return;
+        }
         if (!fragment.isAdded()) {
             LogUtils.d("该" + fragment.toString() + "还未被添加");
             return;
@@ -132,6 +149,10 @@ public class FragmentHelp {
 
 
     public void remove(Fragment fragment) {
+        if (fragment == null) {
+            LogUtils.d("frgament不存在");
+            return;
+        }
         if (!fragment.isAdded()) {
             LogUtils.d("该" + fragment.toString() + "还未被添加");
             return;
@@ -153,7 +174,6 @@ public class FragmentHelp {
 
     public void replace(@IdRes int containerViewId, Fragment fragment) {
         replace(containerViewId, fragment, null);
-
     }
 
 
@@ -204,6 +224,14 @@ public class FragmentHelp {
 
     public Fragment getStatckTop() {
         return fragmentStack.peek();
+    }
+
+    public Fragment getFragmentAtPos(int pos) {
+        if (pos < fragmentStack.size()&&fragmentStack.size()>0) {
+            int showPos = fragmentStack.size()-1 - pos;
+            return fragmentStack.get(showPos);
+        }
+        return null;
     }
 
 

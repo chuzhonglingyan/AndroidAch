@@ -28,6 +28,7 @@ import com.yuntian.basecomponent.tablayout.widget.MsgView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -40,7 +41,7 @@ import androidx.viewpager.widget.ViewPager;
 public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
     private Context mContext;
     private ViewPager mViewPager;
-    private ArrayList<String> mTitles;
+    private List<String> mTitles=new ArrayList<>();
     private LinearLayout mTabsContainer;
     private int mCurrentTab;
     private float mCurrentPositionOffset;
@@ -184,24 +185,52 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         notifyDataSetChanged();
     }
 
+    public List<String> getmTitles() {
+        return mTitles;
+    }
+
+
+
     /** 关联ViewPager,用于不想在ViewPager适配器中设置titles数据的情况 */
-    public void setViewPager(ViewPager vp, String[] titles) {
+    public void setViewPager(ViewPager vp,  List<String> titles) {
         if (vp == null || vp.getAdapter() == null) {
-            throw new IllegalStateException("ViewPager or ViewPager adapter can not be NULL !");
+            return;
         }
 
-        if (titles == null || titles.length == 0) {
-            throw new IllegalStateException("Titles can not be EMPTY !");
+        if (titles == null || titles.size() == 0) {
+           return;
         }
 
-        if (titles.length != vp.getAdapter().getCount()) {
-            throw new IllegalStateException("Titles length must be the same as the page count !");
+        if (titles.size() != vp.getAdapter().getCount()) {
+            return;
         }
 
         this.mViewPager = vp;
-        mTitles = new ArrayList<>();
-        Collections.addAll(mTitles, titles);
+        mTitles.clear();
+        mTitles.addAll(titles);
 
+        this.mViewPager.removeOnPageChangeListener(this);
+        this.mViewPager.addOnPageChangeListener(this);
+        notifyDataSetChanged();
+    }
+
+    /** 关联ViewPager,用于不想在ViewPager适配器中设置titles数据的情况 */
+    public void setViewPager(ViewPager vp, String[] titles) {
+        if (vp == null || vp.getAdapter() == null) {
+            return;
+        }
+
+        if (titles == null || titles.length == 0) {
+            return;
+        }
+
+        if (titles.length != vp.getAdapter().getCount()) {
+            return;
+        }
+
+        this.mViewPager = vp;
+        mTitles.clear();
+        Collections.addAll(mTitles, titles);
         this.mViewPager.removeOnPageChangeListener(this);
         this.mViewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
@@ -210,11 +239,11 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     /** 关联ViewPager,用于连适配器都不想自己实例化的情况 */
     public void setViewPager(ViewPager vp, String[] titles, FragmentActivity fa, ArrayList<Fragment> fragments) {
         if (vp == null) {
-            throw new IllegalStateException("ViewPager can not be NULL !");
+            return;
         }
 
         if (titles == null || titles.length == 0) {
-            throw new IllegalStateException("Titles can not be EMPTY !");
+            return;
         }
 
         this.mViewPager = vp;
@@ -252,6 +281,16 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         updateTabStyles();
     }
 
+    public void removeNewTab(int pos) {
+        if (pos>=0&&pos<mTitles.size()) {
+            mTitles.remove(pos);
+            mTabsContainer.removeViewAt(pos);
+            this.mTabCount = mTitles == null ? mViewPager.getAdapter().getCount() : mTitles.size();
+            updateTabStyles();
+        }
+    }
+
+
     /** 创建并添加tab */
     private void addTab(final int position, String title, View tabView) {
         TextView tv_tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
@@ -262,23 +301,27 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         tabView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = mTabsContainer.indexOfChild(v);
-                if (position != -1) {
-                    if (mViewPager.getCurrentItem() != position) {
-                        if (mSnapOnTabClick) {
-                            mViewPager.setCurrentItem(position, false);
-                        } else {
-                            mViewPager.setCurrentItem(position);
-                        }
+                try {
+                    int position = mTabsContainer.indexOfChild(v);
+                    if (position != -1) {
+                        if (mViewPager.getCurrentItem() != position) {
+                            if (mSnapOnTabClick) {
+                                mViewPager.setCurrentItem(position, false);
+                            } else {
+                                mViewPager.setCurrentItem(position);
+                            }
 
-                        if (mListener != null) {
-                            mListener.onTabSelect(position);
-                        }
-                    } else {
-                        if (mListener != null) {
-                            mListener.onTabReselect(position);
+                            if (mListener != null) {
+                                mListener.onTabSelect(position);
+                            }
+                        } else {
+                            if (mListener != null) {
+                                mListener.onTabReselect(position);
+                            }
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });

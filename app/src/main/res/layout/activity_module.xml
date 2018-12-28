@@ -3,9 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.activity.MainActivity">
 
+
+    <com.yuntian.basecomponent.tablayout.CommonTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_tab_height"
+        android:background="@color/white"
+        app:tl_textsize="@dimen/default_tab_text_size"
+        app:tl_textSelectColor="@color/color_4169e1"
+        app:tl_textUnselectColor="@color/text_333"
+        />
 
     <FrameLayout
         android:id="@+id/fl_container"
@@ -14,6 +25,5 @@
         android:layout_height="0dp"
         >
     </FrameLayout>
-
 
 </LinearLayout>

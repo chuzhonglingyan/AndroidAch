@@ -91,6 +91,11 @@ public class UserProfileFragmentB extends BaseFragment {
         return R.layout.user_profile2;
     }
 
+    @Override
+    protected void loadInitData() {
+
+    }
+
 
     @Override
     public void onDestroy() {

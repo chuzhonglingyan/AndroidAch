@@ -18,6 +18,11 @@ public class ModuleBFragment extends BaseFragment {
     }
 
     @Override
+    protected void loadInitData() {
+
+    }
+
+    @Override
     public void inject(AppComponent appComponent) {
 
     }

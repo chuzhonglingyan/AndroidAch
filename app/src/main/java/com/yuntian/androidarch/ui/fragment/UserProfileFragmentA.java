@@ -62,7 +62,6 @@ public class UserProfileFragmentA extends BaseFragment {
 
     @Override
     protected void initListener() {
-
     }
 
     @Override
@@ -98,6 +97,11 @@ public class UserProfileFragmentA extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.user_profile;
+    }
+
+    @Override
+    protected void loadInitData() {
+
     }
 
 

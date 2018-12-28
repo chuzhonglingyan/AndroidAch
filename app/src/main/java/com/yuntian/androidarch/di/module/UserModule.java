@@ -40,6 +40,7 @@ public class UserModule {
     @Provides
     public GitHubViewModel provideGitHubViewModel(GitHubRepository  repository) {
         GitHubViewModel viewModule=IViewUtil.getViewModule(iView,GitHubViewModel.class);
+//        viewModule.addObserver(iView.getLifecycle());
         viewModule.setRepo(repository);
         return viewModule;
     }
@@ -49,6 +50,7 @@ public class UserModule {
     @Provides
     public GankViewModel provideGankViewModel(GankRepository  repository) {
         GankViewModel viewModule=IViewUtil.getViewModule(iView,GankViewModel.class);
+        viewModule.addObserver(iView.getLifecycle());
         viewModule.setRepo(repository);
         return viewModule;
     }

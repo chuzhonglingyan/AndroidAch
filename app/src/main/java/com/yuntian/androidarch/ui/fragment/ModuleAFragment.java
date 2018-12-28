@@ -14,7 +14,12 @@ public class ModuleAFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_module;
+        return R.layout.fragment_module_a;
+    }
+
+    @Override
+    protected void loadInitData() {
+
     }
 
     @Override

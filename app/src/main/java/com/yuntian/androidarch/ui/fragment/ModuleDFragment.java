@@ -6,7 +6,6 @@ import android.widget.TextView;
 import com.yuntian.androidarch.R;
 import com.yuntian.baselibs.base.BaseFragment;
 import com.yuntian.baselibs.di.component.AppComponent;
-
 import androidx.annotation.Nullable;
 
 public class ModuleDFragment extends BaseFragment {
@@ -15,6 +14,11 @@ public class ModuleDFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_module;
+    }
+
+    @Override
+    protected void loadInitData() {
+
     }
 
     @Override

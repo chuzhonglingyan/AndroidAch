@@ -21,8 +21,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.yuntian.androidarch.ui.activity.ModuleTabActivity">
-        </activity>
+        <activity android:name="com.yuntian.androidarch.ui.activity.ModuleTabActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.ModuleViewPagerActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.ModuleViewPagerDynamicActivity"/>
     </application>
 
 </manifest>

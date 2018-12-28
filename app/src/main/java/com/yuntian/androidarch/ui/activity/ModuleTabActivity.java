@@ -1,26 +1,30 @@
 package com.yuntian.androidarch.ui.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.widget.FrameLayout;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.ui.fragment.ModuleAFragment;
 import com.yuntian.androidarch.ui.fragment.ModuleBFragment;
 import com.yuntian.androidarch.ui.fragment.ModuleCFragment;
 import com.yuntian.androidarch.ui.fragment.ModuleDFragment;
+import com.yuntian.basecomponent.tablayout.CommonTabLayout;
+import com.yuntian.basecomponent.tablayout.listener.CustomTab;
+import com.yuntian.basecomponent.tablayout.listener.CustomTabEntity;
+import com.yuntian.basecomponent.tablayout.listener.OnTabSelectListener;
 import com.yuntian.baselibs.base.BaseActivity;
 import com.yuntian.baselibs.di.component.AppComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 public class ModuleTabActivity extends BaseActivity {
 
-    private int tabPosition;
-    private static final String SAVE_TABPOSITION = "tabPosition";
 
-    private FrameLayout fl_container;
+    private CommonTabLayout tabLayout;
 
     @Override
     protected int getLayoutId() {
@@ -34,19 +38,13 @@ public class ModuleTabActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        fl_container=findViewById(R.id.fl_container);
+        tabLayout=findViewById(R.id.tab_layout);
     }
 
     @Override
     protected void initListener() {
-
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putInt(SAVE_TABPOSITION, tabPosition);
-    }
 
     @Override
     protected void initData(boolean isInit, @Nullable Bundle savedInstanceState) {
@@ -66,29 +64,39 @@ public class ModuleTabActivity extends BaseActivity {
                 Class<? extends Fragment> clas = fragmentClass.pop();
                 fragmentHelp.pushFragment(fragmentHelp.findFragmentByTag(clas));
             }
-            if (savedInstanceState != null) {
-                tabPosition = savedInstanceState.getInt(SAVE_TABPOSITION);
-            }
         }
-         //view加载完成时回调
-        fl_container.getViewTreeObserver().addOnGlobalLayoutListener(()->{
-            LogUtils.d("getWidth="+fl_container.getWidth()+",getHeight="+fl_container.getHeight());
+        initTab();
+    }
+
+
+    private void  initTab(){
+        List<CustomTabEntity> tabEntitys=new ArrayList<>();
+        tabEntitys.add(new CustomTab("页面A"));
+        tabEntitys.add(new CustomTab("页面B"));
+        tabEntitys.add(new CustomTab("页面C"));
+        tabEntitys.add(new CustomTab("页面D"));
+        tabLayout.setTabData(tabEntitys);
+        tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                //切换fragment
+                fragmentHelp.showAndHide(fragmentHelp.getFragmentAtPos(position));
+            }
+            @Override
+            public void onTabReselect(int position) {
+
+            }
         });
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        fragmentHelp.showAndHide(fragmentHelp.getStatckTop());
+        if (isInitCreate){
+            fragmentHelp.showAndHide(fragmentHelp.getStatckTop());
+        }
         LogUtils.d(fragmentHelp.getFragmentStack().size());
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LogUtils.d("getWidth="+fl_container.getWidth()+",getHeight="+fl_container.getHeight());
-    }
 }

@@ -3,9 +3,10 @@ package com.yuntian.androidarch.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-
 import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.androidarch.R;
+import com.yuntian.androidarch.di.component.DaggerUserComponent;
+import com.yuntian.androidarch.di.module.UserModule;
 import com.yuntian.androidarch.ui.fragment.UserProfileFragmentA;
 import com.yuntian.androidarch.ui.fragment.UserProfileFragmentB;
 import com.yuntian.baselibs.base.BaseActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends BaseActivity {
     private UserProfileFragmentA userProfileFragmentA;
     private UserProfileFragmentB userProfileFragmentB;
 
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -26,7 +28,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void inject(AppComponent appComponent) {
-
+        DaggerUserComponent.builder()
+                .userModule(new UserModule(this))
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -39,7 +45,7 @@ public class MainActivity extends BaseActivity {
             fragmentTransaction.commit();
         });
         findViewById(R.id.tv_goto_db).setOnClickListener(v->{
-            startActivity(new Intent(context, ModuleTabActivity.class));
+            startActivity(new Intent(context, ModuleViewPagerDynamicActivity.class));
         });
     }
 
@@ -69,5 +75,27 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.replace(R.id.fl_b, userProfileFragmentB);
 
         fragmentTransaction.commit();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+
+    /**
+    * android8.0调用在onStop之后，之前在onStop之前，onPause前后不确定 默认保存有id的焦点视图
+     * @param outState
+     */
+   @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState); //保存少量数据
+        //禁止在该方法之后执行FragmentTransaction.commit()提交事务方法
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

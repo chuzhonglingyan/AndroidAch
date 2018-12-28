@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.baselibs.di.component.AppComponent;
 
 import androidx.annotation.IdRes;
@@ -21,14 +22,34 @@ public abstract class BaseFragment extends Fragment implements LifecycleOwner,IV
     protected Context context;
     protected View parentView;
 
+    protected boolean isViewInit;
+    protected boolean hasInitData;
+    protected boolean isInitCreate;//是否初次创建
 
     protected AppComponent getApplicationComponent(AppCompatActivity context) {
         return ((BaseApp) context.getApplication()).component();
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = (AppCompatActivity) context;
+        this.context = context;
+        inject(getApplicationComponent(activity));
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        isViewInit=true;
+
         parentView=inflater.inflate(getLayoutId(), container, false);
         return parentView;
     }
@@ -44,7 +65,11 @@ public abstract class BaseFragment extends Fragment implements LifecycleOwner,IV
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        isInitCreate=savedInstanceState==null;
         initData(savedInstanceState==null,savedInstanceState);
+        if (getUserVisibleHint()&&!hasInitData){
+            loadInitData();
+        }
     }
 
     protected abstract int getLayoutId();
@@ -55,13 +80,27 @@ public abstract class BaseFragment extends Fragment implements LifecycleOwner,IV
     }
 
 
+    /**
+     * 此处可见
+     * @param isVisibleToUser
+     */
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.activity = (AppCompatActivity) context;
-        this.context = context;
-        inject(getApplicationComponent(activity));
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.d(this.toString()+",isVisibleToUser："+isVisibleToUser);
+        if (isVisibleToUser&&isViewInit&&!hasInitData){
+            loadInitData();
+            hasInitData=true;
+        }
     }
+
+
+
+    /**
+     * 此处真正可见
+     */
+    protected abstract void loadInitData();
+
 
     public abstract void inject(AppComponent appComponent);
 
@@ -73,5 +112,8 @@ public abstract class BaseFragment extends Fragment implements LifecycleOwner,IV
     protected abstract void initData(boolean isInit,@Nullable Bundle savedInstanceState);
 
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

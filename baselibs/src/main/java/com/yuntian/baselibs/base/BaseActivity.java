@@ -14,6 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     protected Context context;
     protected FragmentHelp fragmentHelp;
+    protected boolean isInitCreate;//是否初次创建
 
 
     protected AppComponent getApplicationComponent(AppCompatActivity context) {
@@ -24,16 +25,18 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        init();
+        init(savedInstanceState);
         inject(getApplicationComponent(this));
         initView();
         initListener();
         initData(savedInstanceState==null,savedInstanceState);
+
     }
 
-    private void  init(){
+    private void  init(@Nullable Bundle savedInstanceState){
         this.context = this;
         fragmentHelp=FragmentHelp.newIntance(this);
+        isInitCreate=savedInstanceState==null;
     }
 
 

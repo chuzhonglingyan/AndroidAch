@@ -1,6 +1,8 @@
 package com.yuntian.baselibs.base;
 
-public interface IView {
+import androidx.lifecycle.LifecycleOwner;
+
+public interface IView extends LifecycleOwner {
 
 
 }
