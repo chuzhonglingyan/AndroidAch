@@ -196,21 +196,18 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (vp == null || vp.getAdapter() == null) {
             return;
         }
+        this.mViewPager = vp;
+        this.mViewPager.removeOnPageChangeListener(this);
+        this.mViewPager.addOnPageChangeListener(this);
 
         if (titles == null || titles.size() == 0) {
            return;
         }
-
         if (titles.size() != vp.getAdapter().getCount()) {
             return;
         }
-
-        this.mViewPager = vp;
         mTitles.clear();
         mTitles.addAll(titles);
-
-        this.mViewPager.removeOnPageChangeListener(this);
-        this.mViewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
     }
 
@@ -219,20 +216,18 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (vp == null || vp.getAdapter() == null) {
             return;
         }
+        this.mViewPager = vp;
+        this.mViewPager.removeOnPageChangeListener(this);
+        this.mViewPager.addOnPageChangeListener(this);
 
         if (titles == null || titles.length == 0) {
             return;
         }
-
         if (titles.length != vp.getAdapter().getCount()) {
             return;
         }
-
-        this.mViewPager = vp;
         mTitles.clear();
         Collections.addAll(mTitles, titles);
-        this.mViewPager.removeOnPageChangeListener(this);
-        this.mViewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
     }
 
