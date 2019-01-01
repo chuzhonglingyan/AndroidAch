@@ -24,6 +24,10 @@
         <activity android:name="com.yuntian.androidarch.ui.activity.ModuleTabActivity"/>
         <activity android:name="com.yuntian.androidarch.ui.activity.ModuleViewPagerActivity"/>
         <activity android:name="com.yuntian.androidarch.ui.activity.ModuleViewPagerDynamicActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.ExampleListActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.ExampleStateViewActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.DialogActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

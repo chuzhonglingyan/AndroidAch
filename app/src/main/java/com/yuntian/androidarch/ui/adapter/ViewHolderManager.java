@@ -19,6 +19,7 @@ public class ViewHolderManager {
 
     static {
         viewHolderByViewType.put(R.layout.item_gank, GankViewHolder.class);
+        viewHolderByViewType.put(R.layout.item_test, TestViewHolder.class);
     }
 
     public static    Class<? extends BaseViewHolder>  getViewHolder (int viewType){

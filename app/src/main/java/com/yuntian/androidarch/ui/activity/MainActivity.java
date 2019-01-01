@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
             fragmentTransaction.commit();
         });
         findViewById(R.id.tv_goto_db).setOnClickListener(v->{
-            startActivity(new Intent(context, ModuleViewPagerDynamicActivity.class));
+            startActivity(new Intent(context, DialogActivity.class));
         });
     }
 

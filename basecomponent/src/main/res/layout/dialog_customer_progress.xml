@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="我是标题"
+        android:textColor="@color/text_333"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="我是内容"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        android:textColor="@color/text_666" />
+
+
+    <com.yuntian.basecomponent.progress.CircleProgressView
+        android:id="@+id/progressView"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"
+        app:cp_start_progress="0"
+        app:cp_end_progress="60"
+        app:cp_start_color="@color/purple_end"
+        app:cp_end_color="@color/purple_start"
+        app:cp_circleBroken="true"
+        app:cp_isTracked="true"
+        app:cp_track_width="26dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_opt"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:textColor="@color/text_333"
+            android:text="确定"/>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="取消"
+            android:textSize="14dp"
+            android:textColor="@color/text_333"
+            android:gravity="center"
+            />
+    </LinearLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

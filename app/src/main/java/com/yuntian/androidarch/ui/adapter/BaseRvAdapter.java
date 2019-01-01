@@ -20,31 +20,85 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseViewHold
 
     private Context context;
 
-    private List<T>  data=new ArrayList<>();
+    private List<T> data = new ArrayList<>();
 
     public BaseRvAdapter() {
     }
 
 
     public void addData(List<T> list) {
-        if (list==null||list.size()==0){
+        if (list == null || list.size() == 0) {
             return;
         }
         this.data.addAll(list);
-        notifyItemRangeInserted(this.data.size()-list.size(),list.size());
+        notifyItemRangeInserted(this.data.size() - list.size(), list.size());
     }
 
     public void addItem(T item) {
-        if (item==null){
+        if (item == null) {
             return;
         }
         this.data.add(item);
-        notifyItemInserted(this.data.size()-1);
+        notifyItemInserted(this.data.size() - 1);
+    }
+
+
+    public void updateData(int startPos, List<T> list) {
+        if (list == null || list.size() == 0) {
+            return;
+        }
+        if (startPos < data.size() && startPos >= 0) {
+            for (int i = 0; i < list.size(); i++) {
+                data.set(startPos + i, list.get(i));
+            }
+        }
+        notifyItemRangeChanged(startPos, list.size());
+    }
+
+
+    public void updateItem(int pos, T item) {
+        if (item == null || pos < 0) {
+            return;
+        }
+        if (pos < data.size()) {
+            this.data.set(pos, item);
+            notifyItemChanged(pos);
+        }
+    }
+
+    public void removeData(int startPos, int endPos) {
+        if (startPos > endPos || startPos < 0) {
+            return;
+        }
+        if (endPos + 1 < data.size()) {
+            data.subList(startPos, endPos + 1).clear();
+            notifyItemRangeRemoved(startPos, endPos - startPos + 1);
+        }
+    }
+
+
+    public void removeList(List<T> list) {
+        if (list == null || list.size() == 0) {
+            return;
+        }
+        data.removeAll(list);
+        notifyDataSetChanged();
+    }
+
+
+    public void removeItem(int pos) {
+        if (pos < 0) {
+            return;
+        }
+        if (pos < data.size()) {
+            this.data.remove(pos);
+            notifyItemRemoved(pos);
+        }
     }
 
 
     public void setData(List<T> list) {
-        if (list==null||list.size()==0){
+        if (list == null || list.size() == 0) {
             return;
         }
         this.data.clear();
@@ -69,18 +123,18 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseViewHold
     }
 
     public T getItem(int position) {
-        if (data.size()>0){
+        if (data.size() > 0) {
             return data.get(position);
         }
-        return  null;
+        return null;
     }
 
 
     @NonNull
     @Override
     public BaseViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (context==null){
-            context=parent.getContext();
+        if (context == null) {
+            context = parent.getContext();
         }
         BaseViewHolder<T> baseViewHolder = BaseViewHolder.createViewHolder(parent, viewType);
         createItemClickListener(baseViewHolder);
@@ -94,7 +148,7 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter<BaseViewHold
                 if (position < 0) { //视图没及时刷新，获得位置信息可能为-1
                     return;
                 }
-                if (getItem(position) == null){
+                if (getItem(position) == null) {
                     return;
                 }
                 onItemClickListener.onItemClick(baseViewHolder.itemView, getItem(position), position);

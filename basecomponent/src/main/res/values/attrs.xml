@@ -222,4 +222,77 @@
         <!-- 圆角矩形宽高相等,取较宽高中大值-->
         <attr name="mv_isWidthHeightEqual" format="boolean"/>
     </declare-styleable>
+
+
+    <!--CircleStyle-->
+    <declare-styleable name="CircleProgressView">
+
+        <attr name="cp_track_width" format="dimension"/>
+        <attr name="cp_start_progress" format="integer"/>
+        <attr name="cp_end_progress" format="integer"/>
+        <attr name="cp_start_color" format="color"/>
+        <attr name="cp_end_color" format="color"/>
+        <attr name="cp_isTracked" format="boolean"/>
+        <attr name="cp_trackColor" format="color"/>
+        <attr name="cp_progressTextColor" format="color"/>
+        <attr name="cp_progressDuration" format="integer"/>
+        <attr name="cp_progressTextVisibility" format="boolean"/>
+        <attr name="cp_progressTextSize" format="dimension"/>
+        <attr name="cp_animateType">
+            <enum name="AccelerateDecelerateInterpolator" value="0"/>
+            <enum name="LinearInterpolator" value="1"/>
+            <enum name="AccelerateInterpolator" value="2"/>
+            <enum name="DecelerateInterpolator" value="3"/>
+            <enum name="OvershootInterpolator" value="4"/>
+        </attr>
+        <attr name="cp_isFilled" format="boolean"/>
+        <attr name="cp_circleBroken" format="boolean"/>
+        <attr name="cp_isGraduated" format="boolean"/>
+        <attr name="cp_scaleZone_width" format="dimension"/>
+        <attr name="cp_scaleZone_length" format="dimension"/>
+        <attr name="cp_scaleZone_corner_radius" format="dimension"/>
+        <attr name="cp_scaleZone_padding" format="dimension"/>
+
+    </declare-styleable>
+
+    <!--HorizontalStyle-->
+    <declare-styleable name="HorizontalProgressView">
+        <attr name="hp_track_width" format="dimension"/>
+        <attr name="hp_start_progress" format="integer"/>
+        <attr name="hp_end_progress" format="integer"/>
+        <attr name="hp_start_color" format="color"/>
+        <attr name="hp_end_color" format="color"/>
+        <attr name="hp_isTracked" format="boolean"/>
+        <attr name="hp_trackColor" format="color"/>
+        <attr name="hp_progressTextColor" format="color"/>
+        <attr name="hp_progressDuration" format="integer"/>
+        <attr name="hp_progressTextVisibility" format="boolean"/>
+        <attr name="hp_progressTextSize" format="dimension"/>
+        <attr name="hp_animateType">
+            <enum name="hp_AccelerateDecelerateInterpolator" value="0"/>
+            <enum name="hp_LinearInterpolator" value="1"/>
+            <enum name="hp_AccelerateInterpolator" value="2"/>
+            <enum name="hp_DecelerateInterpolator" value="3"/>
+            <enum name="hp_OvershootInterpolator" value="4"/>
+        </attr>
+        <attr name="hp_corner_radius" format="dimension"/>
+        <attr name="hp_text_padding_bottom" format="dimension"/>
+        <attr name="hp_textMovedEnable" format="boolean"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+
 </resources>

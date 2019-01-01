@@ -2,6 +2,8 @@ package com.yuntian.androidarch;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import io.reactivex.Flowable;
@@ -36,5 +38,40 @@ public class RxJavaTest {
         }
     }
 
+    @Test
+    public void  test3() {
+        List<String> list=new ArrayList<>();
 
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+
+        list.subList(1,3).clear();
+
+        for (String temp: list ) {
+            System.out.println(temp+"");
+        }
+    }
+
+    @Test
+    public void  test4() {
+        List<String> list=new ArrayList<>();
+
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+
+
+        List<String>  tem=new ArrayList<>();
+
+        tem.add(list.get(0));
+        tem.add(list.get(3));
+        list.removeAll(tem);
+
+        for (String temp: list ) {
+            System.out.println(temp+"");
+        }
+    }
 }
