@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.bean.GankInfo;
+import com.yuntian.basecomponent.adapter.BaseViewHolder;
 
 import androidx.annotation.NonNull;
 
@@ -22,7 +23,7 @@ public class GankViewHolder extends BaseViewHolder<GankInfo> {
     }
 
     @Override
-    void bindData(GankInfo gankInfo, int position) {
+   public void bindData(GankInfo gankInfo, int position) {
         TextView tv_pos = getView(R.id.tv_pos);
         TextView tv_id = getView(R.id.tv_id);
         TextView textView = getView(R.id.tv_name);
@@ -31,7 +32,7 @@ public class GankViewHolder extends BaseViewHolder<GankInfo> {
         textView.setText(gankInfo.getDesc());
     }
 
-    void clear() {
+    public void clear() {
 
     }
 }

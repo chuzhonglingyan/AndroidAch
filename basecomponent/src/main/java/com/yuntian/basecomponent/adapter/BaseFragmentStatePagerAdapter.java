@@ -1,4 +1,4 @@
-package com.yuntian.androidarch.ui.adapter;
+package com.yuntian.basecomponent.adapter;
 
 import com.blankj.utilcode.util.ObjectUtils;
 
@@ -7,19 +7,23 @@ import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * @author chulingyan
  * @time 2018/12/20 21:36
  * @describe
  */
-public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
+public class BaseFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> data=new ArrayList<>();
+    protected List<Fragment> data=new ArrayList<>();
 
-    public BaseFragmentPagerAdapter(FragmentActivity fragmentActivity,List<Fragment> data) {
+    protected FragmentManager fragmentManager;
+
+    public BaseFragmentStatePagerAdapter(FragmentActivity fragmentActivity, List<Fragment> data) {
         super(fragmentActivity.getSupportFragmentManager());
+        this.fragmentManager=fragmentActivity.getSupportFragmentManager();
         if (ObjectUtils.isEmpty(data)){
             return;
         }
@@ -27,7 +31,7 @@ public class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
 
-    public BaseFragmentPagerAdapter(FragmentActivity fragmentActivity) {
+    public BaseFragmentStatePagerAdapter(FragmentActivity fragmentActivity) {
         this(fragmentActivity,null);
     }
 

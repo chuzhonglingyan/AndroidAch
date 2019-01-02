@@ -1,4 +1,4 @@
-package com.yuntian.androidarch.ui.adapter;
+package com.yuntian.basecomponent.adapter;
 
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -31,9 +31,9 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder  {
         super(itemView);
     }
 
-    abstract   void  bindData(T t,int position);
+    public abstract   void  bindData(T t, int position);
 
-    abstract     void clear();
+    public abstract     void clear();
 
     public <V extends View> V  getView(@IdRes int id){
         View view = viewSparseArray.get(id);

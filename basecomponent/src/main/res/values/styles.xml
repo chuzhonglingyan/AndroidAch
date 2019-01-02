@@ -14,7 +14,7 @@
         <item name="windowMinWidthMinor">90%</item>
 
         <!-- 取消标题栏，如果在代码中settitle的话会无效 -->
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
 
         <!-- 标题的和Message的文字颜色 -->
         <!--<item name="android:textColorPrimary">@color/black</item>-->
@@ -38,7 +38,7 @@
     </style>
 
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowSoftInputMode">adjustPan</item>

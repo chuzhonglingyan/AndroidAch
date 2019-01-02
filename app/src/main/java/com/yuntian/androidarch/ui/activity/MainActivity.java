@@ -9,6 +9,7 @@ import com.yuntian.androidarch.di.component.DaggerUserComponent;
 import com.yuntian.androidarch.di.module.UserModule;
 import com.yuntian.androidarch.ui.fragment.UserProfileFragmentA;
 import com.yuntian.androidarch.ui.fragment.UserProfileFragmentB;
+import com.yuntian.androidarch.ui.view.flexboxLayout.FlexboxLayoutActivity;
 import com.yuntian.baselibs.base.BaseActivity;
 import com.yuntian.baselibs.di.component.AppComponent;
 
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity {
             fragmentTransaction.commit();
         });
         findViewById(R.id.tv_goto_db).setOnClickListener(v->{
-            startActivity(new Intent(context, DialogActivity.class));
+            startActivity(new Intent(context, PermissionActivity.class));
         });
     }
 

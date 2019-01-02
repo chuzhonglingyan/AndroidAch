@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.yuntian.androidarch.R;
-import com.yuntian.androidarch.ui.adapter.BaseRvAdapter;
+import com.yuntian.basecomponent.adapter.BaseRvAdapter;
 import com.yuntian.baselibs.base.BaseActivity;
 import com.yuntian.baselibs.di.component.AppComponent;
 import java.util.List;

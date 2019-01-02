@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_main_color"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="15dp"
+                android:text="哈哈哈哈哈1"
+                android:gravity="center"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="15dp"
+                android:text="哈哈哈哈哈2"
+                android:gravity="center"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="15dp"
+                android:text="哈哈哈哈哈3"
+                android:gravity="center"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="15dp"
+                android:text="哈哈哈哈哈4"
+                android:gravity="center"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="15dp"
+                android:text="哈哈哈哈哈5"
+                android:gravity="center"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

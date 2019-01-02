@@ -1,5 +1,6 @@
 package com.yuntian.baselibs.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -8,11 +9,13 @@ import com.yuntian.baselibs.util.FragmentHelp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 
 public abstract class BaseActivity extends AppCompatActivity implements LifecycleOwner, IView {
 
     protected Context context;
+    protected FragmentActivity activity;
     protected FragmentHelp fragmentHelp;
     protected boolean isInitCreate;//是否初次创建
 
@@ -35,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Lifecycl
 
     private void  init(@Nullable Bundle savedInstanceState){
         this.context = this;
+        this.activity = this;
         fragmentHelp=FragmentHelp.newIntance(this);
         isInitCreate=savedInstanceState==null;
     }

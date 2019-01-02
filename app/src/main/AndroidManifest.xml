@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yuntian.androidarch">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.yuntian.androidarch.base.App"
@@ -26,8 +25,11 @@
         <activity android:name="com.yuntian.androidarch.ui.activity.ModuleViewPagerDynamicActivity"/>
         <activity android:name="com.yuntian.androidarch.ui.activity.ExampleListActivity"/>
         <activity android:name="com.yuntian.androidarch.ui.activity.ExampleStateViewActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.GlideActivity"/>
+        <activity android:name="com.yuntian.androidarch.ui.activity.PermissionActivity"/>
         <activity android:name="com.yuntian.androidarch.ui.activity.DialogActivity"
             android:theme="@style/AppTheme"/>
+        <activity android:name="com.yuntian.androidarch.ui.view.flexboxLayout.FlexboxLayoutActivity"/>
     </application>
 
 </manifest>

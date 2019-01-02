@@ -1,11 +1,11 @@
-package com.yuntian.androidarch.ui.adapter;
+package com.yuntian.basecomponent.adapter;
 
 import android.view.ViewGroup;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -65,7 +65,7 @@ public class BaseFragmentDynamicPagerAdapter extends BaseFragmentStatePagerAdapt
     }
 
     @Override
-    public int getItemPosition(@NotNull Object object) {
+    public int getItemPosition(@NonNull Object object) {
         if (!((Fragment) object).isAdded() || !data.contains(object)) {
             return PagerAdapter.POSITION_NONE;
         }
@@ -73,9 +73,8 @@ public class BaseFragmentDynamicPagerAdapter extends BaseFragmentStatePagerAdapt
     }
 
 
-    @NotNull
     @Override
-    public Object instantiateItem(@NotNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Fragment instantiateItem = ((Fragment) super.instantiateItem(container, position));
         Fragment item = data.get(position);
         if (instantiateItem == item) {
@@ -90,7 +89,7 @@ public class BaseFragmentDynamicPagerAdapter extends BaseFragmentStatePagerAdapt
 
 
     @Override
-    public void destroyItem(@NotNull ViewGroup container, int position, @NotNull Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         Fragment fragment = (Fragment) object; //如果getItemPosition中的值为PagerAdapter.POSITION_NONE，就执行该方法。
         if (data.contains(fragment)) {
             super.destroyItem(container, position, fragment);

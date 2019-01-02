@@ -65,8 +65,8 @@ public class PopDialog extends BaseDialogFragment {
         WindowManager.LayoutParams wlp = window.getAttributes();
         wlp.gravity = Gravity.TOP;
         wlp.dimAmount = 0;//完全透明背景
-//        wlp.width = Utils.dp2px(context,100); // 宽度
-//        wlp.height = Utils.dp2px(context,100); // 高度
+//        wlp.width = UiUtils.dp2px(context,100); // 宽度
+//        wlp.height = UiUtils.dp2px(context,100); // 高度
         //自适应
         wlp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;

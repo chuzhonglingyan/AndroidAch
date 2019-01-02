@@ -45,7 +45,7 @@ public class CommonDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+//        setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
 
     public static CommonDialog newInstance(OnCallDialog callDialog, boolean cancelable, OnDialogCancelListener cancelListener) {
@@ -89,7 +89,6 @@ public class CommonDialog extends DialogFragment {
             }
             WindowManager.LayoutParams windowParams = window.getAttributes();
             windowParams.dimAmount = 0.0f;
-            dialog.getWindow().setLayout((int) (ScreenUtils.getScreenWidth() * 0.5), ViewGroup.LayoutParams.WRAP_CONTENT);
             window.setAttributes(windowParams);
         }
     }

@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.ui.dialog.PopDialog;
 import com.yuntian.androidarch.ui.dialog.TestDialog1;
@@ -46,7 +47,8 @@ public class DialogActivity extends BaseActivity {
     protected void initView() {
         PopDialog dialog= fragmentHelp.newFragmentIntance(PopDialog.class);
         findViewById(R.id.tv_click).setOnClickListener(v->{
-            dialog.showViewBottom(this,v);
+            DialogFragmentHelper.showBottomSheetDialog(getSupportFragmentManager(), "正在加载中",true,null);
+//            dialog.showViewBottom(this,v);
             LogUtils.d(getdynamicStatusBarHeight());
 //            dialog.show(this);
         });

@@ -1,26 +1,21 @@
-package com.yuntian.androidarch.ui.adapter;
+package com.yuntian.basecomponent.adapter;
 
 import android.util.SparseArray;
 import android.view.View;
 
+import androidx.annotation.LayoutRes;
+
 import com.blankj.utilcode.util.ReflectUtils;
-import com.yuntian.androidarch.R;
 
 /**
  * @author chulingyan
  * @time 2018/12/16 11:58
  * @describe
  */
-public class ViewHolderManager {
+public  class ViewHolderManager {
 
     //布局id对应ViewHolder
     private static SparseArray<Class<? extends BaseViewHolder>> viewHolderByViewType=new SparseArray<>();
-
-
-    static {
-        viewHolderByViewType.put(R.layout.item_gank, GankViewHolder.class);
-        viewHolderByViewType.put(R.layout.item_test, TestViewHolder.class);
-    }
 
     public static    Class<? extends BaseViewHolder>  getViewHolder (int viewType){
         Class<? extends BaseViewHolder> clas= viewHolderByViewType.get(viewType);
@@ -32,6 +27,11 @@ public class ViewHolderManager {
 
     public static  <T> BaseViewHolder<T>  createViewHolder(int viewType, View itemView){
         return createViewHolder(getViewHolder(viewType),itemView);
+    }
+
+
+    public static void  registerViewHolder(@LayoutRes int layoutId,Class<? extends BaseViewHolder> viewHolder){
+        viewHolderByViewType.put(layoutId,viewHolder);
     }
 
 

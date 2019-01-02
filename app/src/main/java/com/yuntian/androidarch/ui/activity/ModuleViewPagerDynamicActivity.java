@@ -1,13 +1,10 @@
 package com.yuntian.androidarch.ui.activity;
 
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ObjectUtils;
 import com.yuntian.androidarch.R;
-import com.yuntian.androidarch.ui.adapter.BaseFragmentDynamicPagerAdapter;
+import com.yuntian.basecomponent.adapter.BaseFragmentDynamicPagerAdapter;
 import com.yuntian.androidarch.ui.fragment.ModuleListFragment;
 import com.yuntian.basecomponent.tablayout.SlidingTabLayout;
 import com.yuntian.baselibs.base.BaseActivity;

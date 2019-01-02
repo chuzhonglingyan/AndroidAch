@@ -1,7 +1,11 @@
 package com.yuntian.androidarch;
 
+import com.yuntian.androidarch.annotation.CheckPermission;
+
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -72,6 +76,18 @@ public class RxJavaTest {
 
         for (String temp: list ) {
             System.out.println(temp+"");
+        }
+    }
+
+    @Test
+    public void  test5() {
+        TestT test=new TestT();
+        try {
+            Method method= test.getClass().getMethod("wiriteToSd");
+            CheckPermission annotation=method.getAnnotation(CheckPermission.class);
+            System.out.println(annotation.value());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
     }
 }

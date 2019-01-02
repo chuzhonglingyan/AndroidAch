@@ -3,7 +3,7 @@ package com.yuntian.androidarch.ui.activity;
 import com.blankj.utilcode.util.TimeUtils;
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.bean.TestBean;
-import com.yuntian.androidarch.ui.adapter.BaseRvAdapter;
+import com.yuntian.basecomponent.adapter.BaseRvAdapter;
 import java.util.ArrayList;
 import java.util.List;
 

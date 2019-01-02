@@ -21,6 +21,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.yuntian.basecomponent.R;
+import com.yuntian.baselibs.util.UiUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -262,7 +263,7 @@ public class HorizontalProgressView extends View {
                  * draw the animated text of progress, should think about the offsets, or text will be covered.
                  */
                 canvas.drawText(progressText,
-                        (getWidth() - getPaddingLeft() - getPaddingRight() - Utils.dp2px(mContext, 28))*(moveProgress/100) + Utils.dp2px(mContext, 10) ,
+                        (getWidth() - getPaddingLeft() - getPaddingRight() - UiUtils.dp2px(mContext, 28))*(moveProgress/100) + UiUtils.dp2px(mContext, 10) ,
                         getHeight()/2-getPaddingTop()-mTextPaddingBottomOffset, mTextPaint);
             }else {
                 canvas.drawText(progressText, (getWidth() - getPaddingLeft())/2 , getHeight()/2-getPaddingTop()-mTextPaddingBottomOffset, mTextPaint);
@@ -406,7 +407,7 @@ public class HorizontalProgressView extends View {
      * @param width stroke
      */
     public void setTrackWidth(int width){
-        this.mTrackWidth = Utils.dp2px(mContext, width);
+        this.mTrackWidth = UiUtils.dp2px(mContext, width);
         refreshTheView();
     }
 
@@ -432,7 +433,7 @@ public class HorizontalProgressView extends View {
      * @param size text size
      */
     public void setProgressTextSize(int size){
-        mProgressTextSize = Utils.sp2px(mContext, size);
+        mProgressTextSize = UiUtils.sp2px(mContext, size);
         refreshTheView();
     }
 
@@ -532,7 +533,7 @@ public class HorizontalProgressView extends View {
      * @param radius the corner radius
      */
     public void setProgressCornerRadius(int radius){
-        this.mCornerRadius = Utils.dp2px(mContext, radius);
+        this.mCornerRadius = UiUtils.dp2px(mContext, radius);
         refreshTheView();
     }
 
@@ -541,7 +542,7 @@ public class HorizontalProgressView extends View {
      * @param offset the value of padding bottom
      */
     public void setProgressTextPaddingBottom(int offset){
-        this.mTextPaddingBottomOffset = Utils.dp2px(mContext, offset);
+        this.mTextPaddingBottomOffset = UiUtils.dp2px(mContext, offset);
     }
 
 

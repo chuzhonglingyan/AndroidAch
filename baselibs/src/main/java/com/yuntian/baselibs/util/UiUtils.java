@@ -1,4 +1,4 @@
-package com.yuntian.basecomponent.progress;
+package com.yuntian.baselibs.util;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import android.content.Context;
  * utils to help develop
  */
 
-public class Utils {
+public class UiUtils {
     /**
      * change dp to px
      * @param context

@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import com.yuntian.androidarch.R;
 import com.yuntian.basecomponent.dialog.BaseDialogFragment;
-import com.yuntian.basecomponent.progress.Utils;
+import com.yuntian.baselibs.util.UiUtils;
 import com.yuntian.basecomponent.view.SafeEditText;
 
 import androidx.annotation.Nullable;
@@ -61,7 +61,7 @@ public class TestDialog1 extends BaseDialogFragment {
         super.upDateWindow(window);
         WindowManager.LayoutParams wlp = window.getAttributes();
         wlp.gravity = Gravity.BOTTOM;
-        wlp.y = Utils.dp2px(context,10); // 新位置Y坐标
+        wlp.y = UiUtils.dp2px(context,10); // 新位置Y坐标
         window.setAttributes(wlp);
 
     }

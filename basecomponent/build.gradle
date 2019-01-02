@@ -37,9 +37,6 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-1'
     api 'com.classic.common:multiple-status-view:1.5.1'
 
-//    api ('me.zhanghai.android.materialprogressbar:library:1.6.1'){
-//        exclude group: 'androidx.appcompat', module: 'appcompat'
-//        exclude group: 'androidx.annotation', module: 'annotation'
-//    }
+    api 'com.google.android:flexbox:1.1.0'
     implementation project(path: ':baselibs')
 }

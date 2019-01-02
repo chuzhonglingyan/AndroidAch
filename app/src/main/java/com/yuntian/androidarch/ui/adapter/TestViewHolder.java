@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yuntian.androidarch.R;
-import com.yuntian.androidarch.bean.GankInfo;
 import com.yuntian.androidarch.bean.TestBean;
+import com.yuntian.basecomponent.adapter.BaseViewHolder;
 
 import androidx.annotation.NonNull;
 
@@ -23,14 +23,14 @@ public class TestViewHolder extends BaseViewHolder<TestBean> {
     }
 
     @Override
-    void bindData(TestBean testBean, int position) {
+    public void bindData(TestBean testBean, int position) {
         TextView tv_id = getView(R.id.tv_id);
         TextView textView = getView(R.id.tv_name);
         tv_id.setText(String.valueOf(position));
         textView.setText(testBean.getName());
     }
 
-    void clear() {
+    public void clear() {
 
     }
 }

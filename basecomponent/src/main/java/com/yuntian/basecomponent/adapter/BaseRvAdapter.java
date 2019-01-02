@@ -1,4 +1,4 @@
-package com.yuntian.androidarch.ui.adapter;
+package com.yuntian.basecomponent.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;

@@ -23,6 +23,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import com.yuntian.basecomponent.R;
+import com.yuntian.baselibs.util.UiUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -484,7 +485,7 @@ public class CircleProgressView extends View {
      * @param width stroke
      */
     public void setTrackWidth(int width){
-        this.mTrackWidth = Utils.dp2px(mContext, width);
+        this.mTrackWidth = UiUtils.dp2px(mContext, width);
         progressPaint.setStrokeWidth(width);
         updateTheTrack();
         refreshTheView();
@@ -495,7 +496,7 @@ public class CircleProgressView extends View {
      * @param size text size
      */
     public void setProgressTextSize(int size){
-        mProgressTextSize = Utils.sp2px(mContext, size);
+        mProgressTextSize = UiUtils.sp2px(mContext, size);
         refreshTheView();
     }
 
@@ -574,7 +575,7 @@ public class CircleProgressView extends View {
      * @param zoneWidth each zone 's width
      */
     public void setScaleZoneWidth(float zoneWidth){
-        this.mScaleZoneWidth = Utils.dp2px(mContext, zoneWidth);
+        this.mScaleZoneWidth = UiUtils.dp2px(mContext, zoneWidth);
     }
 
     /**
@@ -582,7 +583,7 @@ public class CircleProgressView extends View {
      * @param zoneLength each zone 's length
      */
     public void setScaleZoneLength(float zoneLength){
-        this.mScaleZoneLength = Utils.dp2px(mContext, zoneLength);
+        this.mScaleZoneLength = UiUtils.dp2px(mContext, zoneLength);
     }
 
     /**
@@ -590,7 +591,7 @@ public class CircleProgressView extends View {
      * @param zonePadding distance
      */
     public void setScaleZonePadding(int zonePadding){
-        this.mScaleZonePadding = Utils.dp2px(mContext, zonePadding);
+        this.mScaleZonePadding = UiUtils.dp2px(mContext, zonePadding);
     }
 
     /**
@@ -598,7 +599,7 @@ public class CircleProgressView extends View {
      * @param cornerRadius round rect zone's corner
      */
     public void setScaleZoneCornerRadius(int cornerRadius){
-        this.mScaleZoneCornerRadius = Utils.dp2px(mContext, cornerRadius);
+        this.mScaleZoneCornerRadius = UiUtils.dp2px(mContext, cornerRadius);
     }
 
     /**
