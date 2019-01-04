@@ -127,5 +127,6 @@ static def addRepos(RepositoryHandler handler) {
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     handler.maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    handler.maven { url 'https://dl.bintray.com/yutianyulei/maven'}
 }
 ext.addRepos = this.&addRepos

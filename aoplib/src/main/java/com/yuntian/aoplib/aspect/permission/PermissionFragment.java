@@ -1,4 +1,4 @@
-package com.yuntian.androidarch.ui.activity;
+package com.yuntian.aoplib.aspect.permission;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,8 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import com.blankj.utilcode.util.LogUtils;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * @author chulingyan
  * @time 2019/01/01 21:54
- * @describe
+ * @describe 权限fragment
  */
 public class PermissionFragment extends Fragment {
 
@@ -81,7 +80,9 @@ public class PermissionFragment extends Fragment {
                 requestPermissions(permissions, PermissionsUtil.getRequsteCode(permissions[0]));
             } else {
                 if (iPermissions != null) {
-                    iPermissions.onPermissionGranted(hasGanPermission);
+                    if (hasGanPermission.size()>0){
+                        iPermissions.onPermissionGranted(hasGanPermission);
+                    }
                     iPermissions.onPermissonReject(resultDENIED);
                 }
             }
@@ -105,8 +106,9 @@ public class PermissionFragment extends Fragment {
                 //并集
                 hasGanPermission.removeAll(resultGRANTED);
                 hasGanPermission.addAll(resultGRANTED);
-
-                iPermissions.onPermissionGranted(hasGanPermission);
+                if (hasGanPermission.size()>0){
+                    iPermissions.onPermissionGranted(hasGanPermission);
+                }
                 iPermissions.onPermissonReject(resultDENIED);
             }
             //用户不同意，向用户展示该权限作用
@@ -117,7 +119,7 @@ public class PermissionFragment extends Fragment {
     }
 
 
-    public void showRationalDialog(String[] permissions) {
+    private void showRationalDialog(FragmentActivity activity, String[] permissions) {
         if (permissions != null && permissions.length > 0) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < permissions.length; i++) {
@@ -157,7 +159,6 @@ public class PermissionFragment extends Fragment {
             List<String> resultGRANTED = new ArrayList<>();
             List<String> resultDENIED = new ArrayList<>();
             for (int i = 0; i < permissions.length; i++) {
-                LogUtils.d("permissions[" + i + "]:" + permissions[i]);
                 int hasWriteStoragePermission = ContextCompat.checkSelfPermission(context, permissions[i]);
                 if (hasWriteStoragePermission == PackageManager.PERMISSION_GRANTED) {
                     resultGRANTED.add(permissions[i]);
@@ -169,7 +170,9 @@ public class PermissionFragment extends Fragment {
                 //并集
                 hasGanPermission.removeAll(resultGRANTED);
                 hasGanPermission.addAll(resultGRANTED);
-                iPermissions.onPermissionGranted(hasGanPermission);
+                if (hasGanPermission.size()>0){
+                    iPermissions.onPermissionGranted(hasGanPermission);
+                }
                 iPermissions.onPermissonReject(resultDENIED);
             }
         } else {

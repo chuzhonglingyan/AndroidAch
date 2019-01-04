@@ -1,31 +1,29 @@
-package com.yuntian.androidarch.aspect;
-
+package com.yuntian.aoplib.aspect.permission;
 
 import androidx.fragment.app.FragmentActivity;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.yuntian.androidarch.annotation.CheckPermission;
-import com.yuntian.androidarch.ui.activity.PermissionsUtil;
+import com.yuntian.aoplib.annotation.CheckPermission;
+import com.yuntian.aoplib.util.DebugLog;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-
 import java.util.Arrays;
 import java.util.List;
 
 @Aspect
 public class CheckPermissionAspect {
 
+    private static final String TAG = "CheckPermissionAspect";
+
     //注解作用的方法
     private static final String POINTCUT_METHOD =
-            "execution(@com.yuntian.androidarch.annotation.CheckPermission * *(..))";
+            "execution(@com.yuntian.aoplib.annotation.CheckPermission * *(..))";
 
     //注解作用的构造方法
     private static final String POINTCUT_CONSTRUCTOR =
-            "execution(@com.yuntian.androidarch.annotation.CheckPermission *.new(..))";
+            "execution(@com.yuntian.aoplib.annotation.CheckPermission *.new(..))";
 
     //方法切入点
     @Pointcut(POINTCUT_METHOD)
@@ -47,15 +45,15 @@ public class CheckPermissionAspect {
         Object object = joinPoint.getTarget();
         String methodName = methodSignature.getName();
         final Object[] results = {null};
-        LogUtils.d("className:" + className + ",methodName:" + methodName + ",CheckPermission" + Arrays.toString(annotation.value()));
-        if (object instanceof FragmentActivity&&annotation.value().length>0) {
+        DebugLog.log(TAG,"className:" + className + ",methodName:" + methodName + ",CheckPermission" + Arrays.toString(annotation.value()));
+        if (object instanceof FragmentActivity) {
             PermissionsUtil.checkPermission((FragmentActivity) object, annotation.value(), new PermissionsUtil.IPermissions() {
                 @Override
                 public void onPermissionGranted(List<String> result) {
                     try {
-                        if (result.containsAll(Arrays.asList(annotation.value()))){
-                            LogUtils.d("onPermissionGranted:"+ result);
-                            results[0] =joinPoint.proceed();  //连接点: 一个方法调用或者方法入口。
+                        if (result.containsAll(Arrays.asList(annotation.value()))) {
+                            DebugLog.log(TAG,"onPermissionGranted:" + result);
+                            results[0] = joinPoint.proceed();  //连接点: 一个方法调用或者方法入口。
                         }
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
@@ -65,7 +63,8 @@ public class CheckPermissionAspect {
 
                 @Override
                 public void onPermissonReject(List<String> result) {
-                    LogUtils.d("onPermissonReject:"+ result);
+                    DebugLog.log(TAG,"onPermissonReject:" + result);
+                    PermissionsUtil.showRationalDialog((FragmentActivity) object, CollectionUtil.listToArray(result));
                 }
 
                 @Override
@@ -74,9 +73,8 @@ public class CheckPermissionAspect {
                 }
             });
         }
-        return results[0] ;
+        return results[0];
     }
-
 
 
 }

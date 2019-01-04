@@ -1,20 +1,22 @@
 package com.yuntian.androidarch.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.di.component.DaggerUserComponent;
 import com.yuntian.androidarch.di.module.UserModule;
+import com.yuntian.androidarch.router.ARouterUtil;
 import com.yuntian.androidarch.ui.fragment.UserProfileFragmentA;
 import com.yuntian.androidarch.ui.fragment.UserProfileFragmentB;
-import com.yuntian.androidarch.ui.view.flexboxLayout.FlexboxLayoutActivity;
 import com.yuntian.baselibs.base.BaseActivity;
 import com.yuntian.baselibs.di.component.AppComponent;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
+import static com.yuntian.androidarch.router.RouteUrl.PATH_PERMISSIONPAGE;
 
 public class MainActivity extends BaseActivity {
 
@@ -46,7 +48,9 @@ public class MainActivity extends BaseActivity {
             fragmentTransaction.commit();
         });
         findViewById(R.id.tv_goto_db).setOnClickListener(v->{
-            startActivity(new Intent(context, PermissionActivity.class));
+            // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
+            ARouter.getInstance().build(PATH_PERMISSIONPAGE).navigation();
+//            startActivity(new Intent(context, PermissionActivity.class));
         });
     }
 

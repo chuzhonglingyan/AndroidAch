@@ -1,10 +1,11 @@
-package com.yuntian.androidarch.annotation;
+package com.yuntian.aoplib.annotation;
 
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 /**
  * @author chulingyan
  * @time 2019/01/02 22:24

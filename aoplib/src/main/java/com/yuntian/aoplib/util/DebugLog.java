@@ -1,6 +1,8 @@
-package com.yuntian.androidarch.aspect.trace;
+package com.yuntian.aoplib.util;
 
 import android.util.Log;
+
+import com.yuntian.aoplib.BuildConfig;
 
 public class DebugLog {
 
@@ -8,12 +10,13 @@ public class DebugLog {
 
     /**
      * Send a debug log message
-     *
      * @param tag Source of a log message.
      * @param message The message you would like logged.
      */
     public static void log(String tag, String message) {
-        Log.d(tag, message);
+        if (BuildConfig.DEBUG){
+            Log.d(tag, message);
+        }
     }
 
 }

@@ -25,9 +25,9 @@ public class ViewUtil {
     }
 
 
-
     /**
-     *  判断点击屏幕的位置是不是在指定的view上
+     * 判断点击屏幕的位置是不是在指定的view上
+     *
      * @param view
      * @param ev
      * @return
@@ -43,5 +43,19 @@ public class ViewUtil {
         }
         return true;
     }
+
+
+    /**
+     * 获取view左上角坐标
+     *
+     * @param view
+     * @return
+     */
+    public static int[] getViewLocationOnScreen(View view) {
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        return location;
+    }
+
 
 }

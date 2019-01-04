@@ -6,11 +6,12 @@ buildscript {
     dependencies {
         classpath deps.android_gradle_plugin
         classpath deps.kotlin.plugin
-        classpath 'org.aspectj:aspectjtools:1.8.9'
-        classpath 'org.aspectj:aspectjweaver:1.8.9'
+
+        classpath 'com.yuntian.plugin:android-aspectj-plugin:1.0.0'
     }
     repositories {
         google()
+
     }
 
 }

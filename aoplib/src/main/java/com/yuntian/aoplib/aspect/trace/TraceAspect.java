@@ -1,8 +1,7 @@
-package com.yuntian.androidarch.aspect;
+package com.yuntian.aoplib.aspect.trace;
 
 
-import com.yuntian.androidarch.aspect.trace.DebugLog;
-import com.yuntian.androidarch.aspect.trace.StopWatch;
+import com.yuntian.aoplib.util.DebugLog;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
