@@ -2,18 +2,26 @@ package com.yuntian.aoplib.aspect.permission;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.collection.ArrayMap;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author chulingyan
@@ -24,56 +32,138 @@ public class PermissionsUtil {
 
     private static final String TAG = "PermissionsUtil";
 
+    public static final int GANEND_TYPE = PackageManager.PERMISSION_GRANTED;
+    public static final int Denied_TYPE = PackageManager.PERMISSION_DENIED;
+
     private static ArrayMap<String, Integer> permissionsRequsteCode = new ArrayMap<>();
-    private static ArrayMap<String, String> permissionsDesc= new ArrayMap<>();
-    public static final int MORES_PERMISSION_CODE = 0x1000;
-    private static final int SD_PERMISSION_CODE = 0x1001;
-    private static final int CAMERA_PERMISSION_CODE = 0x1002;
-    private static final int CALL_PHONE_PERMISSION_CODE = 0x1003;
+    private static ArrayMap<String, String> permissionsDesc = new ArrayMap<>();
 
     static {
-        permissionsRequsteCode.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, SD_PERMISSION_CODE);
         permissionsDesc.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, "Sd卡");
-
-        permissionsRequsteCode.put(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
         permissionsDesc.put(Manifest.permission.CAMERA, "相机");
-
-        permissionsRequsteCode.put(Manifest.permission.CALL_PHONE, CALL_PHONE_PERMISSION_CODE);
         permissionsDesc.put(Manifest.permission.CALL_PHONE, "打电话");
+    }
+
+    private static Map<Class, List<Method>> mapGanendCallBack = new ConcurrentHashMap<>();
+    private static Map<Class, List<Method>> mapRejectCallBack = new ConcurrentHashMap<>();
+
+    public static void putGanendCallBackMethod(Class c, Method method) {
+        List<Method> methods = mapGanendCallBack.get(c);
+        if (methods == null) {
+            methods = new ArrayList<>();
+        }
+        if (!methods.contains(method)){
+            methods.add(method);
+            mapGanendCallBack.put(c, methods);
+        }
+    }
+
+    public static List<Method> getGanendCallBackMethod(Class c) {
+        return mapGanendCallBack.get(c);
+    }
+
+    public static void putRejectCallBackMethod(Class c, Method method) {
+        List<Method> methods = mapRejectCallBack.get(c);
+        if (methods == null) {
+            methods = new ArrayList<>();
+        }
+        if (!methods.contains(method)){
+            methods.add(method);
+            mapRejectCallBack.put(c, methods);
+        }
+    }
+
+    public static List<Method> getRejectCallBackMethod(Class c) {
+        return mapRejectCallBack.get(c);
     }
 
     public void initPermissionsTip() {
 
     }
 
+    public static Integer getRequsteCode(List<String> permissons) {
+        return getRequsteCode(CollectionUtil.listToArray(permissons));
+    }
+
+
     public static Integer getRequsteCode(String permisson) {
-        if (permissionsRequsteCode.get(permisson) != null) {
-            return permissionsRequsteCode.get(permisson);
+        return getRequsteCode(new String[]{permisson});
+    }
+
+    public static Integer getRequsteCode(String[] permissons) {
+        String permissonStr = getPermissionsStr(permissons);
+        if (permissionsRequsteCode.get(permissonStr) != null) {
+            return permissionsRequsteCode.get(permissonStr);
         }
         return 0;
     }
 
-    public interface IPermissions {
-        void onPermissionGranted(List<String> result);
 
-        void onPermissonReject(List<String> result);
+    public interface IPermissions {
+        void onGrantedPermissionGranted(List<String> result);
+
+        void onDeniedPermisson(List<String> result);
 
         void shouldShowRational(String permisson);
     }
 
-    public static void checkPermission(FragmentActivity activity, String[] permissions, IPermissions iPermissions) {
+    public static void checkPermission(Object o, String[] permissions, IPermissions iPermissions) {
+        if (o instanceof FragmentActivity) {
+            checkPermission((FragmentActivity) o, permissions, iPermissions);
+        } else if (o instanceof Fragment) {
+            checkPermission((Fragment) o, permissions, iPermissions);
+        } else if (o instanceof View) {
+            View view = (View) o;
+            if (view.getContext() instanceof FragmentActivity) {
+                checkPermission((FragmentActivity) view.getContext(), permissions, iPermissions);
+            }
+        } else if (o instanceof Dialog) {
+            Dialog dialog = (Dialog) o;
+            if (dialog.getContext() instanceof FragmentActivity) {
+                checkPermission((FragmentActivity) dialog.getContext(), permissions, iPermissions);
+            }
+        }
+    }
+
+    public static void createPemissonsRequestCode(String[] permissions) {
+        String permissionsStr = getPermissionsStr(permissions);
+        if (permissionsRequsteCode.containsKey(permissionsStr)) {
+            return;
+        }
+        permissionsRequsteCode.put(permissionsStr, createPemissonRequestCode(permissionsStr));
+    }
+
+    public static String getPermissionsStr(String[] permissions) {
+        StringBuilder permissionsBuilder = new StringBuilder();
+        if (permissions != null) {
+            for (String permission : permissions) {
+                permissionsBuilder.append(permission);
+            }
+        }
+        return permissionsBuilder.toString();
+    }
+
+
+    public static int createPemissonRequestCode(String permission) {
+        return permission.hashCode() >>> 16;
+    }
+
+    public static void checkPermission(FragmentActivity host, String permission, IPermissions iPermissions) {
+        checkPermission(host, new String[]{permission}, iPermissions);
+    }
+
+
+    public static void checkPermission(FragmentActivity host, String[] permissions, IPermissions iPermissions) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (permissions == null || permissions.length <= 0) {
-                    Log.d(TAG, "权限不能为空");
-                    return;
-                }
-                PermissionFragment fragment = (PermissionFragment) activity.getSupportFragmentManager().findFragmentByTag(PermissionFragment.class.getSimpleName());
+                createPemissonsRequestCode(permissions);
+
+                PermissionFragment fragment = (PermissionFragment) host.getSupportFragmentManager().findFragmentByTag(PermissionFragment.class.getSimpleName());
                 if (fragment == null) {
                     fragment = new PermissionFragment();
                 }
                 fragment.setiPermission(iPermissions, permissions);
-                FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = host.getSupportFragmentManager().beginTransaction();
                 if (fragment.isAdded()) {
                     fragment.requestPermissions();
                     return;
@@ -81,6 +171,44 @@ public class PermissionsUtil {
                 transaction.add(fragment, PermissionFragment.class.getSimpleName());
                 transaction.hide(fragment);
                 transaction.commitAllowingStateLoss();
+            } else {
+                if (iPermissions != null) {
+                    iPermissions.onGrantedPermissionGranted(Arrays.asList(permissions));
+                    iPermissions.onDeniedPermisson(new ArrayList<>());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void checkPermission(Fragment host, String permission, IPermissions iPermissions) {
+        checkPermission(host, new String[]{permission}, iPermissions);
+    }
+
+    public static void checkPermission(Fragment host, String[] permissions, IPermissions iPermissions) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                createPemissonsRequestCode(permissions);
+                PermissionFragment fragment = (PermissionFragment) host.getChildFragmentManager().findFragmentByTag(PermissionFragment.class.getSimpleName());
+                if (fragment == null) {
+                    fragment = new PermissionFragment();
+                }
+                fragment.setiPermission(iPermissions, permissions);
+                FragmentTransaction transaction = host.getChildFragmentManager().beginTransaction();
+                if (fragment.isAdded()) {
+                    fragment.requestPermissions();
+                    return;
+                }
+
+                transaction.add(fragment, PermissionFragment.class.getSimpleName());
+                transaction.hide(fragment);
+                transaction.commitAllowingStateLoss();
+            } else {
+                if (iPermissions != null) {
+                    iPermissions.onGrantedPermissionGranted(Arrays.asList(permissions));
+                    iPermissions.onDeniedPermisson(new ArrayList<>());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,16 +216,16 @@ public class PermissionsUtil {
     }
 
 
-    public static void showRationalDialog(FragmentActivity activity, String[] permissions) {
-        if (permissions != null && permissions.length > 0) {
+    public static void showRationalDialog(FragmentActivity activity, List<String> permissions) {
+        if (permissions != null && permissions.size() > 0) {
             StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < permissions.length; i++) {
-                if (permissionsDesc.containsKey(permissions[i])){
-                    stringBuilder.append(permissionsDesc.get(permissions[i]));
-                }else {
-                    stringBuilder.append(permissions[i]);
+            for (int i = 0; i < permissions.size(); i++) {
+                if (permissionsDesc.containsKey(permissions.get(i))) {
+                    stringBuilder.append(permissionsDesc.get(permissions.get(i)));
+                } else {
+                    stringBuilder.append(permissions.get(i));
                 }
-                if (i < permissions.length - 1) {
+                if (i < permissions.size() - 1) {
                     stringBuilder.append(",");
                 }
             }
@@ -105,7 +233,7 @@ public class PermissionsUtil {
                     .setTitle("权限申请")
                     .setMessage(String.format("%s权限申请", stringBuilder.toString()))
                     .setPositiveButton("确认", (dialog, which) -> {
-                        gotoSetting(activity, permissions);
+                        gotoSetting(activity, PermissionsUtil.getRequsteCode(permissions.get(0)));
                     })
                     .setNegativeButton("取消", null)
                     .create()
@@ -113,18 +241,21 @@ public class PermissionsUtil {
         }
     }
 
+    public static void showRationalDialog(FragmentActivity activity, String[] permissions) {
+        showRationalDialog(activity, Arrays.asList(permissions));
+    }
+
 
     /**
      * 跳转到设置界面；
      *
      * @param activity
-     * @param permissions
      */
-    public static void gotoSetting(Activity activity, String[] permissions) {
+    public static void gotoSetting(Activity activity, int resuqestCode) {
         try {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
-            activity.startActivityForResult(intent, PermissionsUtil.getRequsteCode(permissions[0]));
+            activity.startActivityForResult(intent, resuqestCode);
         } catch (Exception e) {
             e.printStackTrace();
         }

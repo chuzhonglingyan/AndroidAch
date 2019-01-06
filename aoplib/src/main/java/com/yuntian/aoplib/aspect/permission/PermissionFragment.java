@@ -1,6 +1,5 @@
 package com.yuntian.aoplib.aspect.permission;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,8 +25,8 @@ import java.util.List;
 public class PermissionFragment extends Fragment {
 
     private Context context;
-    private Activity activity;
     private String[] permissions;
+    private String [] orginPermissions;
     private PermissionsUtil.IPermissions iPermissions;
 
     private List<String> hasGanPermission = new ArrayList<>();
@@ -36,13 +35,13 @@ public class PermissionFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        this.activity = (Activity) context;
     }
 
 
     public void setiPermission(PermissionsUtil.IPermissions iPermissions, String[] permissions) {
         this.iPermissions = iPermissions;
         this.permissions = permissions;
+        orginPermissions=permissions;
     }
 
 
@@ -77,13 +76,13 @@ public class PermissionFragment extends Fragment {
             if (resultDENIED.size() > 0) {
                 String[] strings = new String[resultDENIED.size()];
                 permissions = resultDENIED.toArray(strings);
-                requestPermissions(permissions, PermissionsUtil.getRequsteCode(permissions[0]));
+                requestPermissions(permissions, PermissionsUtil.getRequsteCode(orginPermissions));
             } else {
                 if (iPermissions != null) {
-                    if (hasGanPermission.size()>0){
-                        iPermissions.onPermissionGranted(hasGanPermission);
+                    if (hasGanPermission.size() > 0) {
+                        iPermissions.onGrantedPermissionGranted(hasGanPermission);
                     }
-                    iPermissions.onPermissonReject(resultDENIED);
+                    iPermissions.onDeniedPermisson(resultDENIED);
                 }
             }
         }
@@ -92,7 +91,7 @@ public class PermissionFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //通过requestCode来识别是否同一个请求
-        if (permissions.length > 0 && requestCode == PermissionsUtil.getRequsteCode(permissions[0])) {
+        if (permissions.length > 0 && requestCode == PermissionsUtil.getRequsteCode(orginPermissions)) {
             List<String> resultGRANTED = new ArrayList<>();
             List<String> resultDENIED = new ArrayList<>();
             for (int i = 0; i < grantResults.length; i++) {
@@ -106,10 +105,10 @@ public class PermissionFragment extends Fragment {
                 //并集
                 hasGanPermission.removeAll(resultGRANTED);
                 hasGanPermission.addAll(resultGRANTED);
-                if (hasGanPermission.size()>0){
-                    iPermissions.onPermissionGranted(hasGanPermission);
+                if (hasGanPermission.size() > 0) {
+                    iPermissions.onGrantedPermissionGranted(hasGanPermission);
                 }
-                iPermissions.onPermissonReject(resultDENIED);
+                iPermissions.onDeniedPermisson(resultDENIED);
             }
             //用户不同意，向用户展示该权限作用
             if (resultDENIED.size() > 0 && shouldShowRequestPermissionRationale(resultDENIED.get(0))) {
@@ -146,7 +145,7 @@ public class PermissionFragment extends Fragment {
         try {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.fromParts("package", context.getPackageName(), null));
-            startActivityForResult(intent, PermissionsUtil.getRequsteCode(permissions[0]));
+            startActivityForResult(intent, PermissionsUtil.getRequsteCode(orginPermissions));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,25 +154,25 @@ public class PermissionFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PermissionsUtil.getRequsteCode(permissions[0])) {
+        if (requestCode == PermissionsUtil.getRequsteCode(permissions)) {
             List<String> resultGRANTED = new ArrayList<>();
             List<String> resultDENIED = new ArrayList<>();
-            for (int i = 0; i < permissions.length; i++) {
-                int hasWriteStoragePermission = ContextCompat.checkSelfPermission(context, permissions[i]);
+            for (String permission : permissions) {
+                int hasWriteStoragePermission = ContextCompat.checkSelfPermission(context, permission);
                 if (hasWriteStoragePermission == PackageManager.PERMISSION_GRANTED) {
-                    resultGRANTED.add(permissions[i]);
+                    resultGRANTED.add(permission);
                 } else {
-                    resultDENIED.add(permissions[i]);
+                    resultDENIED.add(permission);
                 }
             }
             if (iPermissions != null) {
                 //并集
                 hasGanPermission.removeAll(resultGRANTED);
                 hasGanPermission.addAll(resultGRANTED);
-                if (hasGanPermission.size()>0){
-                    iPermissions.onPermissionGranted(hasGanPermission);
+                if (hasGanPermission.size() > 0) {
+                    iPermissions.onGrantedPermissionGranted(hasGanPermission);
                 }
-                iPermissions.onPermissonReject(resultDENIED);
+                iPermissions.onDeniedPermisson(resultDENIED);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

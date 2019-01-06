@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tv1"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:text="申请sd权限"
@@ -19,5 +19,26 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         />
-
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="申请电话权限"
+        android:textColor="@color/color_4169e1"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="申请Sd和电话权限"
+        android:textColor="@color/color_4169e1"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        />
 </LinearLayout>

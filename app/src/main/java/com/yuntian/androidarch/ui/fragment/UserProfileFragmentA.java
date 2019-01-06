@@ -1,15 +1,18 @@
 package com.yuntian.androidarch.ui.fragment;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.di.component.DaggerUserComponent;
 import com.yuntian.androidarch.di.module.UserModule;
 import com.yuntian.androidarch.viewmodel.CommunicateViewModel;
 import com.yuntian.androidarch.viewmodel.GankViewModel;
 import com.yuntian.androidarch.viewmodel.GitHubViewModel;
+import com.yuntian.aoplib.annotation.CheckPermission;
 import com.yuntian.baselibs.base.BaseFragment;
 import com.yuntian.baselibs.di.component.AppComponent;
 import com.yuntian.baselibs.util.GsonUtil;
@@ -67,6 +70,7 @@ public class UserProfileFragmentA extends BaseFragment {
     @Override
     protected void initData(boolean isInit, @Nullable Bundle savedInstanceState) {
         tvData.setOnClickListener(v -> {
+            wiriteToSd();
             mCommunicateViewModel.setName("Jane");
             //        一旦用户数据更新，onChanged回调将被调用然后UI会被刷新。
             gitHubViewModel.getRepoList(userId).observe2(this, repoList -> {
@@ -104,6 +108,13 @@ public class UserProfileFragmentA extends BaseFragment {
 
     }
 
+
+
+
+    @CheckPermission(value = {Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void wiriteToSd() {
+        LogUtils.d("可以使用了WRITE_EXTERNAL_STORAGE");
+    }
 
     @Override
     public void onDestroy() {

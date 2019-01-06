@@ -1,6 +1,7 @@
 package com.yuntian.androidarch;
 
-import com.yuntian.androidarch.annotation.CheckPermission;
+
+import com.yuntian.aoplib.annotation.CheckPermission;
 
 import org.junit.Test;
 
@@ -90,4 +91,15 @@ public class RxJavaTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void  test6() {
+        System.out.println(createPemissonRequestCode("android.permission.WRITE_EXTERNAL_STORAGE"));
+        System.out.println(createPemissonRequestCode("android.permission.WRITE_SETTINGS"));
+    }
+
+    public int  createPemissonRequestCode(String permission){
+        return permission.hashCode()>>> 16;
+    }
+
 }

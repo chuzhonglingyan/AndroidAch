@@ -1,6 +1,7 @@
 package com.yuntian.androidarch;
 
-import com.yuntian.androidarch.annotation.CheckPermission;
+
+import com.yuntian.aoplib.annotation.CheckPermission;
 
 /**
  * @author chulingyan
@@ -13,5 +14,7 @@ public class TestT {
     public void wiriteToSd() {
         System.out.println("你好");
     }
+
+
 
 }
