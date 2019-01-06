@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -96,6 +97,19 @@ public class RxJavaTest {
     public void  test6() {
         System.out.println(createPemissonRequestCode("android.permission.WRITE_EXTERNAL_STORAGE"));
         System.out.println(createPemissonRequestCode("android.permission.WRITE_SETTINGS"));
+
+        //    https://odum9helk.qnssl.com/resource/Ship.jpg?imageView2/2/w/200/h/200
+
+        System.out.println(getRequsetUrl(test,200,200));
+
+    }
+    String test="https://odum9helk.qnssl.com/resource/Ship.jpg";
+
+    public String getRequsetUrl(String requestUrl,int width,int height){
+        String str=requestUrl+"?imageView2/0/w/{0}/h/{1}";
+//        String str=requestUrl+"?imageView2/2/w/{0}/h/{1}";
+//        String str=requestUrl+"?imageView2/2/w/{0}/h/{1}";
+        return MessageFormat.format(str, width,height);
     }
 
     public int  createPemissonRequestCode(String permission){

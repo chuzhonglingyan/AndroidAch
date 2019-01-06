@@ -2,6 +2,7 @@ package com.yuntian.androidarch.ui.activity;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.LogUtils;
 import com.yuntian.androidarch.R;
 import com.yuntian.androidarch.ui.fragment.ModuleAFragment;
@@ -21,6 +22,10 @@ import java.util.Stack;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import static com.yuntian.androidarch.router.RouteUrl.PATH_MODULETAB;
+
+@Route(path = PATH_MODULETAB)
 public class ModuleTabActivity extends BaseActivity {
 
 

@@ -16,7 +16,7 @@ import com.yuntian.androidarch.ui.fragment.UserProfileFragmentB;
 import com.yuntian.baselibs.base.BaseActivity;
 import com.yuntian.baselibs.di.component.AppComponent;
 
-import static com.yuntian.androidarch.router.RouteUrl.PATH_PERMISSIONPAGE;
+import static com.yuntian.androidarch.router.RouteUrl.*;
 
 public class MainActivity extends BaseActivity {
 
@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
         });
         findViewById(R.id.tv_goto_db).setOnClickListener(v->{
             // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
-            ARouter.getInstance().build(PATH_PERMISSIONPAGE).navigation();
+            ARouter.getInstance().build(PATH_GLIDE).navigation();
 //            startActivity(new Intent(context, PermissionActivity.class));
         });
     }

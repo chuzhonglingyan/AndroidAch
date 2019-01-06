@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,7 +16,7 @@ import okhttp3.Response;
  */
 public class ProgressManager {
 
-    private static Map<String, OnProgressListener> listenersMap = Collections.synchronizedMap(new HashMap<>());
+    private static Map<String, OnProgressListener> listenersMap = new ConcurrentHashMap<>();
     private static OkHttpClient okHttpClient;
 
     private ProgressManager() {

@@ -2,6 +2,8 @@ package com.yuntian.androidarch.ui.activity;
 
 import android.os.Bundle;
 import android.util.SparseArray;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.yuntian.androidarch.R;
@@ -16,6 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import static com.yuntian.androidarch.router.RouteUrl.PATH_MODULEVIEWPAGER;
+import static com.yuntian.androidarch.router.RouteUrl.PATH_PERMISSIONPAGE;
+
+@Route(path = PATH_MODULEVIEWPAGER)
 public class ModuleViewPagerActivity extends BaseActivity {
 
 
